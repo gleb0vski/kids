@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Тренажёр устного счёта для детей — Uniqum kids</title>
+<meta name="description" content="Бесплатный онлайн-тренажёр устного счёта для детей 4–10 лет. Сложение, вычитание, умножение. Развивает скорость мышления и внимание.">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="https://uniqumkids.ru/igry/ustnyy-schet/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Тренажёр устного счёта для детей — Uniqum kids">
+<meta property="og:description" content="Решайте примеры в уме, зарабатывайте звёздочки и соревнуйтесь с собой.">
+<meta property="og:image" content="https://uniqumkids.ru/wp-content/uploads/2021/09/preview.jpg">
+<meta property="og:url" content="https://uniqumkids.ru/igry/ustnyy-schet/">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#35BDB2">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Тренажёр устного счёта",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Web",
+  "offers": {"@type": "Offer", "price": "0", "priceCurrency": "RUB"}
+}
+</script>
+
+<style>
+  :root {
+    --mcolor: #35BDB2;
+    --mcolor-dark: #2aa39a;
+    --scolor: #F9B337;
+    --scolor-dark: #e0a02a;
+    --acolor: #FFFFFF;
+    --dark: #2c3e50;
+    --grey: #f0f4f8;
+    --error: #ff6b6b;
+    --success: #4cd964;
+    --purple: #9b59b6;
+    --pink: #ff8fb1;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  html, body { height: 100%; overflow: hidden; }
+
+  body {
+    font-family: 'Nunito', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: linear-gradient(160deg, #e0f7f5 0%, #fef6e4 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    color: var(--dark);
+    position: relative;
+    overflow: hidden;
+  }
+
+  body::before, body::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.5;
+    z-index: 0;
+    pointer-events: none;
+  }
+  body::before {
+    width: 400px; height: 400px;
+    background: var(--mcolor);
+    top: -150px; left: -150px;
+  }
+  body::after {
+    width: 350px; height: 350px;
+    background: var(--scolor);
+    bottom: -120px; right: -120px;
+  }
+
+  .game {
+    background: #fff;
+    border-radius: 32px;
+    box-shadow: 0 24px 64px rgba(53, 189, 178, 0.18), 0 4px 12px rgba(0,0,0,0.04);
+    padding: 36px 28px 32px;
+    max-width: 540px;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  /* МАСКОТ — теперь картинка */
+  .mascot {
+    width: 90px;
+    height: 90px;
+    margin: 0 auto 12px;
+    position: relative;
+    transition: transform 0.3s ease;
+  }
+  .mascot img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  .mascot.happy { animation: bounce 0.5s ease; }
+  .mascot.sad { animation: shake 0.5s ease; }
+
+  .game__title {
+    font-size: 26px;
+    font-weight: 900;
+    margin-bottom: 6px;
+    color: var(--dark);
+    letter-spacing: -0.5px;
+  }
+  .game__subtitle {
+    font-size: 15px;
+    color: #8899a6;
+    margin-bottom: 22px;
+    font-weight: 400;
+  }
+
+  .game__hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 12px 18px;
+    background: var(--grey);
+    border-radius: 18px;
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .hud__item { display: flex; align-items: center; gap: 8px; }
+  .hud__item i { font-size: 18px; }
+  .hud__item--score i { color: var(--scolor); }
+  .hud__item--progress i { color: var(--mcolor); }
+  .hud__value { color: var(--dark); font-weight: 900; font-size: 18px; }
+
+  .stars {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .star {
+    font-size: 18px;
+    color: #e0e6ed;
+    transition: all 0.3s ease;
+  }
+  .star.filled {
+    color: var(--scolor);
+    animation: pop 0.4s ease;
+    text-shadow: 0 2px 6px rgba(249, 179, 55, 0.4);
+  }
+
+  .task {
+    font-size: 52px;
+    font-weight: 900;
+    margin: 10px 0 28px;
+    color: var(--dark);
+    letter-spacing: 2px;
+    min-height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    animation: taskIn 0.4s ease;
+  }
+  .task__answer {
+    color: var(--mcolor);
+    border-bottom: 5px solid var(--scolor);
+    padding: 0 14px;
+    min-width: 70px;
+    display: inline-block;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+  }
+  .task__answer.revealed {
+    color: var(--dark);
+    background: rgba(249, 179, 55, 0.2);
+  }
+
+  .answers {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-bottom: 8px;
+  }
+  .answer-btn {
+    padding: 22px 10px;
+    font-size: 26px;
+    font-weight: 900;
+    border: 3px solid #e0e6ed;
+    background: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
+    color: var(--dark);
+    position: relative;
+    overflow: hidden;
+    user-select: none;
+  }
+  .answer-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(53,189,178,0.15), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .answer-btn:hover:not(:disabled)::before { opacity: 1; }
+  .answer-btn:hover:not(:disabled) {
+    border-color: var(--mcolor);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(53, 189, 178, 0.22);
+  }
+  .answer-btn:active:not(:disabled) { transform: translateY(0) scale(0.97); }
+  .answer-btn.correct {
+    background: var(--success);
+    border-color: var(--success);
+    color: #fff;
+    animation: pulse 0.45s;
+  }
+  .answer-btn.wrong {
+    background: var(--error);
+    border-color: var(--error);
+    color: #fff;
+    animation: shake 0.45s;
+  }
+  .answer-btn:disabled { cursor: default; }
+
+  .btn {
+    padding: 18px 44px;
+    font-size: 19px;
+    font-weight: 900;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    background: var(--mcolor);
+    color: #fff;
+    transition: all 0.25s;
+    font-family: inherit;
+    box-shadow: 0 8px 0 var(--mcolor-dark), 0 12px 24px rgba(53, 189, 178, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    user-select: none;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 0 var(--mcolor-dark), 0 16px 28px rgba(53, 189, 178, 0.35); }
+  .btn:active { transform: translateY(6px); box-shadow: 0 2px 0 var(--mcolor-dark), 0 4px 8px rgba(53, 189, 178, 0.3); }
+  .btn--orange {
+    background: var(--scolor);
+    box-shadow: 0 8px 0 var(--scolor-dark), 0 12px 24px rgba(249, 179, 55, 0.3);
+  }
+  .btn--orange:hover { box-shadow: 0 10px 0 var(--scolor-dark), 0 16px 28px rgba(249, 179, 55, 0.35); }
+  .btn--orange:active { box-shadow: 0 2px 0 var(--scolor-dark), 0 4px 8px rgba(249, 179, 55, 0.3); }
+
+  .screen { display: none; }
+  .screen.active { display: block; animation: fadeIn 0.4s ease; }
+
+  .start-features {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0 26px;
+    flex-wrap: wrap;
+  }
+  .start-feature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #8899a6;
+    font-weight: 700;
+  }
+  .start-feature i { font-size: 28px; color: var(--mcolor); }
+  .start-feature:nth-child(2) i { color: var(--scolor); }
+  .start-feature:nth-child(3) i { color: var(--purple); }
+
+  .record-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, #fff7e0, #ffeeb8);
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #a07200;
+    margin-bottom: 20px;
+  }
+  .record-badge i { color: var(--scolor); }
+
+  .result__title {
+    font-size: 30px;
+    font-weight: 900;
+    margin-bottom: 8px;
+    color: var(--dark);
+  }
+  .result__text {
+    font-size: 16px;
+    color: #8899a6;
+    margin-bottom: 24px;
+    font-weight: 400;
+  }
+  .result__stats {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin: 24px 0 28px;
+  }
+  .result__stat {
+    flex: 1;
+    padding: 16px 10px;
+    background: var(--grey);
+    border-radius: 18px;
+    text-align: center;
+  }
+  .result__stat i { font-size: 22px; margin-bottom: 6px; display: block; }
+  .result__stat:nth-child(1) i { color: var(--scolor); }
+  .result__stat:nth-child(2) i { color: var(--success); }
+  .result__stat:nth-child(3) i { color: var(--mcolor); }
+  .result__stat-value {
+    font-size: 26px;
+    font-weight: 900;
+    color: var(--dark);
+    line-height: 1.1;
+  }
+  .result__stat-label {
+    font-size: 12px;
+    color: #8899a6;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 4px;
+  }
+  .result__actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .new-record {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    background: linear-gradient(135deg, #ffe0e6, #ffd0d9);
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 900;
+    color: #c0392b;
+    margin-bottom: 16px;
+    animation: pop 0.5s ease;
+  }
+  .new-record i { color: var(--pink); }
+
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+    100% { transform: scale(1); }
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(5px); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes taskIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes pop {
+    0% { transform: scale(0.6); }
+    60% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-12px); }
+    60% { transform: translateY(-4px); }
+  }
+
+  @media (max-width: 480px) {
+    .game { padding: 26px 18px 24px; border-radius: 24px; }
+    .game__title { font-size: 21px; }
+    .mascot { width: 72px; height: 72px; }
+    .task { font-size: 38px; min-height: 56px; margin: 6px 0 22px; }
+    .answer-btn { font-size: 22px; padding: 18px 8px; border-radius: 16px; }
+    .answers { gap: 10px; }
+    .btn { font-size: 16px; padding: 15px 28px; }
+    .result__title { font-size: 24px; }
+    .result__stats { gap: 8px; }
+    .result__stat-value { font-size: 22px; }
+    .star { font-size: 15px; }
+  }
+
+  @media (max-height: 700px) {
+    .mascot { width: 60px; height: 60px; margin-bottom: 8px; }
+    .game__title { font-size: 20px; }
+    .task { font-size: 40px; margin: 6px 0 18px; min-height: 52px; }
+    .game__subtitle { margin-bottom: 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="game">
+
+  <!-- ЭКРАН 1: СТАРТ -->
+  <div class="screen active" id="screen-start">
+    <div class="mascot" id="mascot-start">
+      <img src="/mascot.svg" alt="Маскот Uniqum kids">
+    </div>
+    <h1 class="game__title">Тренажёр устного счёта</h1>
+    <p class="game__subtitle">Реши 10 примеров и заработай звёздочки</p>
+
+    <div id="record-container"></div>
+
+    <div class="start-features">
+      <div class="start-feature">
+        <i class="fa-solid fa-calculator"></i>
+        <span>Счёт в уме</span>
+      </div>
+      <div class="start-feature">
+        <i class="fa-solid fa-star"></i>
+        <span>Звёздочки</span>
+      </div>
+      <div class="start-feature">
+        <i class="fa-solid fa-trophy"></i>
+        <span>Рекорды</span>
+      </div>
+    </div>
+
+    <button class="btn" id="btn-start">
+      <i class="fa-solid fa-play"></i> Начать игру
+    </button>
+  </div>
+
+  <!-- ЭКРАН 2: ИГРА -->
+  <div class="screen" id="screen-game">
+    <div class="mascot" id="mascot-game">
+      <img src="/mascot.svg" alt="Маскот Uniqum kids">
+    </div>
+
+    <div class="game__hud">
+      <div class="hud__item hud__item--score">
+        <i class="fa-solid fa-star"></i>
+        <span>Очки: <span class="hud__value" id="hud-score">0</span></span>
+      </div>
+      <div class="hud__item hud__item--progress">
+        <i class="fa-solid fa-list-ol"></i>
+        <span>Вопрос: <span class="hud__value" id="hud-progress">1/10</span></span>
+      </div>
+    </div>
+
+    <div class="stars" id="stars"></div>
+
+    <div class="task" id="task">
+      <span id="task-text">2 + 3 =</span>
+      <span class="task__answer" id="task-answer">?</span>
+    </div>
+
+    <div class="answers" id="answers"></div>
+  </div>
+
+  <!-- ЭКРАН 3: РЕЗУЛЬТАТ -->
+  <div class="screen" id="screen-result">
+    <div class="mascot" id="mascot-result">
+      <img src="/mascot.svg" alt="Маскот Uniqum kids">
+    </div>
+
+    <div id="record-result"></div>
+
+    <h2 class="result__title" id="result-title">Молодец!</h2>
+    <p class="result__text" id="result-text">Ты справился с заданием</p>
+
+    <div class="result__stats">
+      <div class="result__stat">
+        <i class="fa-solid fa-star"></i>
+        <div class="result__stat-value" id="result-score">0</div>
+        <div class="result__stat-label">очков</div>
+      </div>
+      <div class="result__stat">
+        <i class="fa-solid fa-check"></i>
+        <div class="result__stat-value" id="result-correct">0</div>
+        <div class="result__stat-label">правильно</div>
+      </div>
+      <div class="result__stat">
+        <i class="fa-solid fa-clock"></i>
+        <div class="result__stat-value" id="result-time">0с</div>
+        <div class="result__stat-label">время</div>
+      </div>
+    </div>
+
+    <div class="result__actions">
+      <button class="btn btn--orange" id="btn-restart">
+        <i class="fa-solid fa-rotate-right"></i> Ещё раз
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  const TOTAL_QUESTIONS = 10;
+  const RECORD_KEY = 'uniqumkids_schet_record';
+
+  const state = {
+    score: 0,
+    correct: 0,
+    currentQuestion: 0,
+    currentAnswer: 0,
+    startTime: 0,
+    locked: false
+  };
+
+  const screens = {
+    start: document.getElementById('screen-start'),
+    game: document.getElementById('screen-game'),
+    result: document.getElementById('screen-result')
+  };
+  const els = {
+    hudScore: document.getElementById('hud-score'),
+    hudProgress: document.getElementById('hud-progress'),
+    stars: document.getElementById('stars'),
+    taskText: document.getElementById('task-text'),
+    taskAnswer: document.getElementById('task-answer'),
+    answers: document.getElementById('answers'),
+    mascotGame: document.getElementById('mascot-game'),
+    resultTitle: document.getElementById('result-title'),
+    resultText: document.getElementById('result-text'),
+    resultScore: document.getElementById('result-score'),
+    resultCorrect: document.getElementById('result-correct'),
+    resultTime: document.getElementById('result-time'),
+    btnStart: document.getElementById('btn-start'),
+    btnRestart: document.getElementById('btn-restart'),
+    recordContainer: document.getElementById('record-container'),
+    recordResult: document.getElementById('record-result')
+  };
+
+  // ===== ЗВУК =====
+  let audioCtx = null;
+  function getAudioCtx() {
+    if (!audioCtx) {
+      try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+      catch(e) { return null; }
+    }
+    return audioCtx;
+  }
+  function playTone(freq, duration, type) {
+    const ctx = getAudioCtx();
+    if (!ctx) return;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = type || 'sine';
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duration);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start();
+    osc.stop(ctx.currentTime + duration);
+  }
+  function soundCorrect() { playTone(660, 0.12); setTimeout(() => playTone(880, 0.15), 100); }
+  function soundWrong() { playTone(220, 0.2, 'sawtooth'); }
+  function soundFinish() {
+    [523, 659, 784, 1047].forEach((f, i) => setTimeout(() => playTone(f, 0.2), i * 120));
+  }
+
+  // ===== УТИЛИТЫ =====
+  function showScreen(name) {
+    Object.values(screens).forEach(s => s.classList.remove('active'));
+    screens[name].classList.add('active');
+  }
+  function rand(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+  function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  // ===== РЕКОРД =====
+  function getRecord() {
+    try { return parseInt(localStorage.getItem(RECORD_KEY) || '0', 10); }
+    catch(e) { return 0; }
+  }
+  function saveRecord(score) {
+    try {
+      const current = getRecord();
+      if (score > current) {
+        localStorage.setItem(RECORD_KEY, String(score));
+        return true;
+      }
+    } catch(e) {}
+    return false;
+  }
+  function renderStartRecord() {
+    const rec = getRecord();
+    if (rec > 0) {
+      els.recordContainer.innerHTML = `<div class="record-badge"><i class="fa-solid fa-trophy"></i> Твой рекорд: ${rec} очков</div>`;
+    } else {
+      els.recordContainer.innerHTML = '';
+    }
+  }
+  function renderResultRecord(isNew) {
+    if (isNew) {
+      els.recordResult.innerHTML = `<div class="new-record"><i class="fa-solid fa-trophy"></i> Новый рекорд!</div>`;
+    } else {
+      const rec = getRecord();
+      if (rec > 0) {
+        els.recordResult.innerHTML = `<div class="record-badge"><i class="fa-solid fa-trophy"></i> Твой рекорд: ${rec} очков</div>`;
+      } else {
+        els.recordResult.innerHTML = '';
+      }
+    }
+  }
+
+  // ===== ЗВЁЗДЫ ПРОГРЕССА =====
+  function renderStars() {
+    els.stars.innerHTML = '';
+    for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+      const star = document.createElement('i');
+      star.className = 'fa-solid fa-star star' + (i < state.currentQuestion ? ' filled' : '');
+      els.stars.appendChild(star);
+    }
+  }
+
+  // ===== ГЕНЕРАЦИЯ ПРИМЕРА =====
+  function generateTask() {
+    let level = 1;
+    if (state.currentQuestion >= 4) level = 2;
+    if (state.currentQuestion >= 7) level = 3;
+
+    let a, b, op, answer;
+
+    if (level === 1) {
+      a = rand(1, 9);
+      b = rand(1, 9);
+      if (a + b > 10) { b = 10 - a; if (b < 1) b = 1; }
+      op = Math.random() < 0.5 ? '+' : '-';
+      if (op === '-' && b > a) { [a, b] = [b, a]; }
+      answer = op === '+' ? a + b : a - b;
+    } else if (level === 2) {
+      a = rand(2, 15);
+      b = rand(2, 15);
+      op = Math.random() < 0.5 ? '+' : '-';
+      if (op === '-' && b > a) { [a, b] = [b, a]; }
+      answer = op === '+' ? a + b : a - b;
+    } else {
+      const r = Math.random();
+      if (r < 0.4) {
+        a = rand(10, 50); b = rand(10, 50); op = '+'; answer = a + b;
+      } else if (r < 0.7) {
+        a = rand(20, 99); b = rand(10, a); op = '-'; answer = a - b;
+      } else {
+        a = rand(2, 9); b = rand(2, 9); op = '×'; answer = a * b;
+      }
+    }
+    return { a, b, op, answer };
+  }
+
+  function generateOptions(correct) {
+    const options = new Set([correct]);
+    while (options.size < 4) {
+      let offset = rand(1, 10);
+      if (Math.random() < 0.5) offset = -offset;
+      const fake = correct + offset;
+      if (fake >= 0 && fake !== correct) options.add(fake);
+    }
+    return shuffle([...options]);
+  }
+
+  // ===== ОТРИСОВКА ВОПРОСА =====
+  function renderQuestion() {
+    const task = generateTask();
+    state.currentAnswer = task.answer;
+    state.locked = false;
+
+    els.taskAnswer.textContent = '?';
+    els.taskAnswer.classList.remove('revealed');
+    els.taskText.textContent = `${task.a} ${task.op} ${task.b} =`;
+
+    els.hudProgress.textContent = `${state.currentQuestion + 1}/${TOTAL_QUESTIONS}`;
+    renderStars();
+
+    const options = generateOptions(task.answer);
+    els.answers.innerHTML = '';
+    options.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.className = 'answer-btn';
+      btn.textContent = opt;
+      btn.addEventListener('click', () => handleAnswer(btn, opt));
+      els.answers.appendChild(btn);
+    });
+  }
+
+  // ===== ОБРАБОТКА ОТВЕТА =====
+  function handleAnswer(btn, value) {
+    if (state.locked) return;
+    state.locked = true;
+
+    const isCorrect = value === state.currentAnswer;
+    const buttons = els.answers.querySelectorAll('.answer-btn');
+    buttons.forEach(b => b.disabled = true);
+
+    if (isCorrect) {
+      btn.classList.add('correct');
+      state.score += 10;
+      state.correct += 1;
+      els.hudScore.textContent = state.score;
+      els.taskAnswer.textContent = state.currentAnswer;
+      els.taskAnswer.classList.add('revealed');
+      els.mascotGame.classList.add('happy');
+      soundCorrect();
+    } else {
+      btn.classList.add('wrong');
+      buttons.forEach(b => {
+        if (parseInt(b.textContent, 10) === state.currentAnswer) {
+          b.classList.add('correct');
+        }
+      });
+      els.taskAnswer.textContent = state.currentAnswer;
+      els.taskAnswer.classList.add('revealed');
+      els.mascotGame.classList.add('sad');
+      soundWrong();
+    }
+
+    setTimeout(() => {
+      els.mascotGame.classList.remove('happy', 'sad');
+      state.currentQuestion++;
+      if (state.currentQuestion >= TOTAL_QUESTIONS) {
+        finishGame();
+      } else {
+        renderQuestion();
+      }
+    }, 1100);
+  }
+
+  // ===== ФИНАЛ =====
+  function finishGame() {
+    const elapsed = Math.round((Date.now() - state.startTime) / 1000);
+    const percent = Math.round((state.correct / TOTAL_QUESTIONS) * 100);
+
+    els.resultScore.textContent = state.score;
+    els.resultCorrect.textContent = `${state.correct}/${TOTAL_QUESTIONS}`;
+    els.resultTime.textContent = `${elapsed}с`;
+
+    if (percent === 100) {
+      els.resultTitle.textContent = 'Идеально!';
+      els.resultText.textContent = 'Ты решил все примеры без ошибок!';
+    } else if (percent >= 70) {
+      els.resultTitle.textContent = 'Отличный результат!';
+      els.resultText.textContent = 'Ты хорошо считаешь в уме.';
+    } else if (percent >= 40) {
+      els.resultTitle.textContent = 'Хорошо!';
+      els.resultText.textContent = 'Продолжай тренироваться — будет ещё лучше.';
+    } else {
+      els.resultTitle.textContent = 'Есть куда расти!';
+      els.resultText.textContent = 'Попробуй ещё раз — с каждым разом будет получаться лучше.';
+    }
+
+    const isNewRecord = saveRecord(state.score);
+    renderResultRecord(isNewRecord);
+    soundFinish();
+    showScreen('result');
+  }
+
+  // ===== СТАРТ =====
+  function startGame() {
+    state.score = 0;
+    state.correct = 0;
+    state.currentQuestion = 0;
+    state.startTime = Date.now();
+    state.locked = false;
+
+    els.hudScore.textContent = '0';
+    showScreen('game');
+    renderQuestion();
+  }
+
+  els.btnStart.addEventListener('click', startGame);
+  els.btnRestart.addEventListener('click', startGame);
+
+  renderStartRecord();
+})();
+</script>
+
+</body>
+</html>
