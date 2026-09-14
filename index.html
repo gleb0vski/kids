@@ -84,7 +84,6 @@
     z-index: 1;
   }
 
-  /* ШАПКА */
   .header {
     text-align: center;
     margin-bottom: 40px;
@@ -118,7 +117,6 @@
     line-height: 1.5;
   }
 
-  /* СЕТКА КАРТОЧЕК */
   .games-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -234,7 +232,6 @@
   .game-card--orange:hover .game-card__btn { background: var(--scolor); }
   .game-card--pink:hover .game-card__btn { background: var(--pink); }
 
-  /* CTA ВНИЗУ */
   .cta {
     background: linear-gradient(135deg, #35BDB2, #2aa39a);
     border-radius: 28px;
@@ -286,7 +283,6 @@
   .cta__btn:hover { transform: translateY(-2px); box-shadow: 0 10px 0 rgba(0,0,0,0.15); }
   .cta__btn:active { transform: translateY(4px); box-shadow: 0 4px 0 rgba(0,0,0,0.15); }
 
-  /* АДАПТИВ */
   @media (max-width: 768px) {
     body { padding: 20px 14px 40px; }
     .header__title { font-size: 28px; }
@@ -306,20 +302,17 @@
 
 <div class="container">
 
-  <!-- ШАПКА -->
   <header class="header">
     <div class="header__mascot">
-      <img src="/mascot.svg" alt="Маскот Uniqum kids">
+      <img src="mascot.svg" alt="Маскот Uniqum kids">
     </div>
     <h1 class="header__title">Игры для развития</h1>
     <p class="header__subtitle">Тренируй память, внимание и счёт вместе с Uniqum kids. Играй бесплатно — прямо в браузере.</p>
   </header>
 
-  <!-- СЕТКА ИГР -->
   <div class="games-grid">
 
-    <!-- Игра 1: Тренажёр счёта -->
-    <a href="/igry/schet.html" class="game-card game-card--teal">
+    <a href="igry/schet.html" class="game-card game-card--teal">
       <div class="game-card__icon">
         <i class="fa-solid fa-calculator"></i>
       </div>
@@ -334,8 +327,7 @@
       </span>
     </a>
 
-    <!-- Игра 2: Память -->
-    <a href="/igry/pamyat.html" class="game-card game-card--purple">
+    <a href="igry/pamyat.html" class="game-card game-card--purple">
       <div class="game-card__icon">
         <i class="fa-solid fa-brain"></i>
       </div>
@@ -350,8 +342,7 @@
       </span>
     </a>
 
-    <!-- Игра 3: Абакус (заглушка) -->
-    <a href="/igry/abakus.html" class="game-card game-card--orange">
+    <a href="igry/abakus.html" class="game-card game-card--orange">
       <div class="game-card__icon">
         <i class="fa-solid fa-chess-board"></i>
       </div>
@@ -366,13 +357,12 @@
       </span>
     </a>
 
-    <!-- Игра 4: Найди пару (заглушка) -->
-    <a href="/igry/naydi-paru.html" class="game-card game-card--pink">
+    <a href="igry/naydi-paru.html" class="game-card game-card--pink">
       <div class="game-card__icon">
         <i class="fa-solid fa-clone"></i>
       </div>
       <h2 class="game-card__title">Найди пару</h2>
-      <p class="game-card__desc">Соедини числа с абакусами и примеры с ответами. Тренировка внимания и скорости.</p>
+      <p class="game-card__desc">Соедини пример с правильным ответом. Тренировка внимания и скорости реакции.</p>
       <div class="game-card__meta">
         <span><i class="fa-solid fa-child"></i> 5–10 лет</span>
         <span><i class="fa-solid fa-clock"></i> 3 мин</span>
@@ -384,11 +374,10 @@
 
   </div>
 
-  <!-- CTA -->
   <section class="cta">
     <h2 class="cta__title">Хочешь считать ещё быстрее?</h2>
     <p class="cta__text">Запишись на бесплатное пробное занятие в Uniqum kids</p>
-    <a href="/courses/mentalnaya-arifmetika/" class="cta__btn">
+    <a href="https://uniqumkids.ru/courses/mentalnaya-arifmetika/" class="cta__btn">
       <i class="fa-solid fa-graduation-cap"></i> Записаться
     </a>
   </section>
